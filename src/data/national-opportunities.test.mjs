@@ -34,7 +34,9 @@ const showcaseDataPath = path.join(
 const BRASILIA_DATE_FILTER_REGEX = /getBrasiliaDateKey\(\)/;
 const DEADLINE_COMPARISON_REGEX = /applicationDeadline/;
 const SHOWCASE_RENDER_REGEX = /<NacionalShowcase \/>/;
-const SHOWCASE_EXPIRY_REGEX = /applicationDeadline\s*>=\s*getBrasiliaDateKey\(\)/;
+const SHOWCASE_EXPIRY_REGEX =
+  /const today = getBrasiliaDateKey\(\);[\s\S]*applicationDeadline\s*>=\s*today/;
+const HTTPS_URL_REGEX = /^https:\/\//;
 const EXPIRED_SHOWCASE_DATE = "2026-09-01";
 
 test("public national APIs exclude opportunities whose deadline has passed", async () => {
@@ -74,6 +76,6 @@ test("national showcase ships only currently open official opportunities", async
 
   for (const opportunity of opportunities) {
     assert.ok(opportunity.applicationDeadline > EXPIRED_SHOWCASE_DATE);
-    assert.match(opportunity.officialLink, /^https:\/\//);
+    assert.match(opportunity.officialLink, HTTPS_URL_REGEX);
   }
 });
