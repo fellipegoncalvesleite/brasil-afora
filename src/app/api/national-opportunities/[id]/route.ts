@@ -1,7 +1,8 @@
-import { eq } from "drizzle-orm";
+import { and, eq, gte } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 import { db } from "@/db/client";
 import { nationalOpportunities } from "@/db/schema/national-opportunities";
+import { getBrasiliaDateKey } from "@/lib/brasilia-date";
 import { requireAdminInRoute } from "@/server/route-auth";
 
 export const dynamic = "force-dynamic";
@@ -48,10 +49,16 @@ export async function GET(
 ) {
   try {
     const { id } = await context.params;
+    const currentDate = getBrasiliaDateKey();
     const data = await db
       .select()
       .from(nationalOpportunities)
-      .where(eq(nationalOpportunities.id, id))
+      .where(
+        and(
+          eq(nationalOpportunities.id, id),
+          gte(nationalOpportunities.applicationDeadline, currentDate)
+        )
+      )
       .limit(1);
 
     return NextResponse.json({ nationalOpportunity: data[0] ?? null });
