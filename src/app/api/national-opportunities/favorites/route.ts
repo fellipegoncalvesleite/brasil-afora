@@ -1,8 +1,9 @@
-import { eq } from "drizzle-orm";
+import { and, eq, gte } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 import { db } from "@/db/client";
 import { favoriteNationalOpportunities } from "@/db/schema/favorite-national-opportunities";
 import { nationalOpportunities as nationalOpportunitiesTable } from "@/db/schema/national-opportunities";
+import { getBrasiliaDateKey } from "@/lib/brasilia-date";
 import { requireSessionInRoute } from "@/server/route-auth";
 
 export const dynamic = "force-dynamic";
@@ -14,6 +15,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
+    const currentDate = getBrasiliaDateKey();
     const rows = await db
       .select({ nationalOpportunity: nationalOpportunitiesTable })
       .from(favoriteNationalOpportunities)
@@ -25,7 +27,10 @@ export async function GET(request: NextRequest) {
         )
       )
       .where(
-        eq(favoriteNationalOpportunities.userId, authResult.session.user.id)
+        and(
+          eq(favoriteNationalOpportunities.userId, authResult.session.user.id),
+          gte(nationalOpportunitiesTable.applicationDeadline, currentDate)
+        )
       );
 
     return NextResponse.json({
