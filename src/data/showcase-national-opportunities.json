@@ -1,0 +1,38 @@
+[
+  {
+    "name": "FEBRACE 2027",
+    "applicationDeadline": "2026-10-20",
+    "deadlineLabel": "Projetos até 20 out. 2026, 18h",
+    "responsibleInstitution": "FEBRACE / Escola Politécnica da USP",
+    "type": "Feira científica",
+    "educationLevel": "8º/9º EF, Ensino Médio e Técnico",
+    "modality": "Submissão online • mostra em São Paulo",
+    "summary": "Feira Brasileira de Ciências e Engenharia para projetos científicos e de engenharia desenvolvidos por estudantes de todo o país.",
+    "eligibility": "Estudantes de 12 a 20 anos, de escolas públicas ou privadas, matriculados nos níveis elegíveis durante 2026.",
+    "officialLink": "https://febrace.org.br/participe/como-enviar/submissao/"
+  },
+  {
+    "name": "Olimpíada Nacional de Empreendedorismo (ONE) 2026",
+    "applicationDeadline": "2026-09-15",
+    "deadlineLabel": "Inscrições até 15 set. 2026",
+    "responsibleInstitution": "ONE / Universidade Federal do Maranhão",
+    "type": "Olimpíada",
+    "educationLevel": "Ensino Médio",
+    "modality": "Participação nacional",
+    "summary": "Jornada nacional em que estudantes do Ensino Médio identificam problemas reais, estruturam soluções e desenvolvem competências de inovação e liderança.",
+    "eligibility": "Estudantes do Ensino Médio de todo o Brasil; a edição também mobiliza professores no acompanhamento da jornada.",
+    "officialLink": "https://one.ufma.br/"
+  },
+  {
+    "name": "Olimpíada Nacional de Eficiência Energética (ONEE) 2026",
+    "applicationDeadline": "2026-09-15",
+    "deadlineLabel": "Inscrições até 15 set. 2026",
+    "responsibleInstitution": "ANEEL / Programa de Eficiência Energética",
+    "type": "Olimpíada",
+    "educationLevel": "8º/9º EF e 1º/2º Ensino Médio",
+    "modality": "Online • participação nacional",
+    "summary": "Competição gratuita sobre eficiência energética e uso seguro da eletricidade, com desafios educativos e provas interativas.",
+    "eligibility": "Estudantes de escolas públicas e privadas de todo o país nos anos e séries elegíveis da edição 2026.",
+    "officialLink": "https://onee.org.br/"
+  }
+]
