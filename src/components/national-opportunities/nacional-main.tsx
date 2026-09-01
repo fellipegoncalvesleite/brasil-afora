@@ -9,6 +9,9 @@ import type { OpportunityCardConfig } from "@/components/opportunities/types";
 import { useOportunidadesNacionais } from "@/hooks/use-oportunidades-nacionais";
 import useOpportunityFilters from "@/hooks/use-opportunity-filters";
 import NacionalFilter from "./nacional-filter";
+import NacionalShowcase, {
+  getActiveNationalShowcaseCount,
+} from "./nacional-showcase";
 import type { OpportunitiesFiltros, Opportunity } from "./types";
 
 const initialFiltros: OpportunitiesFiltros = {
@@ -118,10 +121,11 @@ const NacionalMain = () => {
       onApplyMobileFilters={handleApplyMobileFilters}
       onClearFilters={handleClearFilters}
       onRemoveFilter={handleRemoveFilter}
-      resultCount={filteredData.length}
+      resultCount={filteredData.length + getActiveNationalShowcaseCount()}
       subtitle="Encontre olimpíadas, feiras científicas e projetos de liderança no Brasil."
       title="Oportunidades Nacionais"
     >
+      <NacionalShowcase />
       <OpportunityList config={cardConfig} data={filteredData} />
     </OpportunitiesMainLayout>
   );
