@@ -22,13 +22,19 @@ const nationalMainPath = path.join(
   projectRoot,
   "src/components/national-opportunities/nacional-main.tsx"
 );
+const nationalShowcasePath = path.join(
+  projectRoot,
+  "src/components/national-opportunities/nacional-showcase.tsx"
+);
 const showcaseDataPath = path.join(
   dataDirectory,
   "showcase-national-opportunities.json"
 );
 
-const CURRENT_DATE_FILTER_REGEX = /applicationDeadline[\s\S]*CURRENT_DATE/;
+const BRASILIA_DATE_FILTER_REGEX = /getBrasiliaDateKey\(\)/;
+const DEADLINE_COMPARISON_REGEX = /applicationDeadline/;
 const SHOWCASE_RENDER_REGEX = /<NacionalShowcase \/>/;
+const SHOWCASE_EXPIRY_REGEX = /applicationDeadline\s*>=\s*getBrasiliaDateKey\(\)/;
 const EXPIRED_SHOWCASE_DATE = "2026-09-01";
 
 test("public national APIs exclude opportunities whose deadline has passed", async () => {
@@ -38,13 +44,19 @@ test("public national APIs exclude opportunities whose deadline has passed", asy
     nationalFavoritesRoutePath,
   ]) {
     const source = await readFile(routePath, "utf8");
-    assert.match(source, CURRENT_DATE_FILTER_REGEX);
+    assert.match(source, BRASILIA_DATE_FILTER_REGEX);
+    assert.match(source, DEADLINE_COMPARISON_REGEX);
   }
 });
 
 test("national catalog renders a curated showcase", async () => {
   const source = await readFile(nationalMainPath, "utf8");
   assert.match(source, SHOWCASE_RENDER_REGEX);
+});
+
+test("national showcase automatically drops expired curated cards", async () => {
+  const source = await readFile(nationalShowcasePath, "utf8");
+  assert.match(source, SHOWCASE_EXPIRY_REGEX);
 });
 
 test("national showcase ships only currently open official opportunities", async () => {
