@@ -1,6 +1,8 @@
+import { asc, gte } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 import { db } from "@/db/client";
 import { nationalOpportunities } from "@/db/schema/national-opportunities";
+import { getBrasiliaDateKey } from "@/lib/brasilia-date";
 import { requireAdminInRoute } from "@/server/route-auth";
 
 export const dynamic = "force-dynamic";
@@ -51,7 +53,13 @@ const normalizeNationalInput = (
 
 export async function GET() {
   try {
-    const data = await db.select().from(nationalOpportunities);
+    const currentDate = getBrasiliaDateKey();
+    const data = await db
+      .select()
+      .from(nationalOpportunities)
+      .where(gte(nationalOpportunities.applicationDeadline, currentDate))
+      .orderBy(asc(nationalOpportunities.applicationDeadline));
+
     return NextResponse.json({ nationalOpportunities: data });
   } catch {
     return NextResponse.json(
